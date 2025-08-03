@@ -1,15 +1,28 @@
 
 package com.example.designpattern
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.designpattern.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.designPatternRecyclerView.apply{
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = DesignPatternAdapter(DesignPatternEnum.entries.map{
+                DesignPattern(it.name, it.exampleClass)
+            })
+        }
     }
 }
